@@ -911,7 +911,8 @@
         return self.addMerge(irs, merge);
       };
 
-      _nodesArray(context.rows).map(function(val, ir) {
+     // _nodesArray(context.rows).map(function(val, ir) {
+      for (var i = 0; i <_nodesArray (context. rows) .length; i ++) (function (val, ir){
         if (!!~settings.ignoreRows.indexOf(ir - context.thAdj) || _matches(val, settings.ignoreCSS)) {
           handleIgnore(ir);
         }
