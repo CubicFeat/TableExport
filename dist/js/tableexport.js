@@ -490,8 +490,19 @@
     dateNum: function(v, date1904) {
       if (date1904) v += 1462;
       var epoch = Date.parse(v);
-      var result = (epoch - new Date(Date.UTC(1899, 11, 30))) / (24 * 60 * 60 * 1000);
-      return Math.floor(result);
+       //** Previous conversion
+      //var result = (epoch - new Date(Date.UTC(1899, 11, 30))) / (24 * 60 * 60 * 1000);
+      //return Math.floor(result);
+      
+      //** New conversion
+      // The below edit correctly translates the epoch time stamp into XLS time format
+      //
+      // *** The "- 6" accounts for our timezone ***
+      // The "+ 25569" is the Unix time 0 in xls time format.
+      // The division by 1000 is because Date.parse() returns milliseconds
+      var result = ((epoch/ (60 * 60 * 1000)) - 6)/24 + 25569
+      return result
+           
     },
     /**
      * Creates an Excel spreadsheet from a data string
@@ -521,7 +532,15 @@
           }
           if (cell.t === _TYPE.DATE) {
             cell.t = _TYPE.NUMBER;
-            cell.z = XLSX.SSF._table[14];
+            // ** previous cell format for dates
+            //cell.z = XLSX.SSF._table[14];
+            
+            //** new cell format for dates
+            // if including the time and formatting the cells this way is
+            // an issue in the future we will need to expand all this to include
+            // passing in options.
+            cell.z = 'm/d/yy h:mm:ss';
+
             cell.v = this.dateNum(cell.v);
           }
           ws[cell_ref] = cell;
