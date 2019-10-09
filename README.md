@@ -1,3 +1,5 @@
+**Fork of TableExport to address some performance issues, correct some date issues**
+
 [![TableExport](/Hero.png)](https://tableexport.travismclarke.com)
 
 <!-- # [TableExport](https://tableexport.travismclarke.com) -->
